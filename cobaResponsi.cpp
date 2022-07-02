@@ -1,25 +1,23 @@
 #include <iostream>
-#include <list>
 #include <queue>
 #include <map>
 #include <cstring>
 
 using namespace std;
 
+//Struct berisi judul, stok, dan harga buku
 struct Book {
     string title;
     int stock;
     double price;
 };
 
+//Variabel Global
+map<string, Book> BookData;
+map<string, Book>::iterator It;
+Book Buku[10];
+
 void DataBuku() {
-    map<string, Book> BookData;
-    map<string, Book>::iterator It;
-
-    //Deklarasi variabel CustName untuk nama customer, Code untuk kode buku, dan Saldo untuk saldo customer
-    string Code;
-
-    Book Buku[10];
     //Array dari struct Book
     Buku[0] = {"Laut Bercerita", 25, 110000};
     Buku[1] = {"Si Putih", 15, 85000};
@@ -55,6 +53,7 @@ void DataBuku() {
     cout << "-------------------------------------------------" << endl << endl;
 }
 
+//Enum untuk membentuk graph
 enum tempat {
     IN,
     FANTASY,
@@ -65,10 +64,12 @@ enum tempat {
     J_TEMPAT
 };
 
+//Fungsi input jarak
 void jarakTempat(double jarak[J_TEMPAT][J_TEMPAT], tempat tempatA, tempat tempatB, double s) {
     jarak[tempatA][tempatB] = jarak[tempatB][tempatA] = s;
 }
 
+//Fungsi untuk membentuk graph dan cek rak tujuan
 void cekRakBuku() {
     double jarak[J_TEMPAT][J_TEMPAT];
 
@@ -214,19 +215,20 @@ void cekRakBuku() {
     cout << "Jarak dari " << asal << " ke " << tujuan      << " = " << total_jarak << " m ke arah " << arah << endl;
 }
 
+//Fungsi Pembelian Buku
 int buyBook() {
     queue<string> custName;
-    string name;
-    int jml, Code;
+    string name, Code;
+    int jml;
 
     DataBuku();
 
     cout << "Jumlah pelanggan   : ";
     cin >> jml;
 
-    for(int i = 0; i < jml; i++) {
+    for(int i = 0; i < jml; ++i) {
         cout << "Nama Pelanggan     : ";
-        cin >> name;
+        getline(cin, name);
         custName.push(name);
     }
 
@@ -235,7 +237,7 @@ int buyBook() {
         cout << "Halo " << custName.front() << "!" << endl;
         cout << "Nomor antrian anda saat ini adalah " << i + 1 << endl;
 
-        /*cout << "Masukkan kode buku : ";
+        cout << "Masukkan kode buku : ";
         cin >> Code;
 
         if(Code == "F20" || Code == "F21" || Code == "F22" || Code == "H30" || Code == "H31" || Code == "FI40" || Code == "FI41" ||Code == "T50" || Code == "T51") {
@@ -248,26 +250,33 @@ int buyBook() {
             cout << "Jumlah buku yang dipesan : ";
             cin >> qty;
 
-            if(BookData[Code].Stock < qty){
-                std::cout << "Stok Buku di Toko Kurang!" << std::endl;
+            if(BookData[Code].stock < qty){
+                cout << "Stok Buku di Toko Kurang!" << endl;
             } else{
-                std::cout << "Jumlah pesanan : " << qty << " buku " << std::endl;
+                cout << "Jumlah pesanan : " << qty << " buku " << endl;
                 //Mengurangi stok buku sesuai dengan masukan pelanggan
-                BookData[Code].Stock -= qty;
-                std::cout << "Sisa stok buku : " << BookData[Code].Stock << std::endl << std::endl;
+                BookData[Code].stock -= qty;
+                cout << "Sisa stok buku : " << BookData[Code].stock << endl << endl;
             }
+
+            //Menghitung total harga yang dibayarkan
+            int TotPrice = BookData[Code].price * qty;
+            cout << "Harga yang harus dibayar : " << TotPrice << endl;
         } else{
             cout << "Buku Tidak Tersedia!" << endl << endl;
             continue;
         }
-        cout << endl << endl;*/
+        cout << endl;
 
         custName.pop();
     }
+    
+    std::cout << "Terima Kasih " << CustName << " Atas Kedatangannya! " << std::endl;
 
     return 0;
 }
 
+//Menu Utama
 void menu() {
     cout << endl << endl ;
     cout << "================ MENU BOOKSTORE ===============" << endl;
@@ -292,14 +301,16 @@ int main() {
         cin >> pilih;
 
         switch (pilih) {
-            case 1 :
+            case 1:
                 DataBuku();
                 break;
-            case 2 :
+            case 2:
                 cekRakBuku();
                 break;
-            case 3 :
+            case 3:
                 buyBook();
+                break;
+            case 4:
                 break;
             default:
                 cout << "Pilihan yang Anda masukkan salah!" << endl; 
