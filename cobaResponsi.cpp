@@ -268,10 +268,10 @@ int buyBook() {
         }
         cout << endl;
 
+        cout << "Terima Kasih " << custName.front() << " Atas Kedatangannya! " << endl;
+
         custName.pop();
     }
-    
-    std::cout << "Terima Kasih " << CustName << " Atas Kedatangannya! " << std::endl;
 
     return 0;
 }
