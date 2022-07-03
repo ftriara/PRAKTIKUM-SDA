@@ -103,7 +103,7 @@ void graphTempatBuku() {
             }
         }
 
-    //Hitung jarak total destinasi rak pengunjung
+    //Hitung jarak total antar tempat
     string asal, tujuan, arah;
     int total_jarak = 0;
 
@@ -298,14 +298,14 @@ void menu() {
 int main() {
     int pilih;
 
-    cout << endl << endl ;
+    cout << endl << endl;
     cout << "#########################################################" << endl;
     cout << "###########SELAMAT DATANG DI ADIWARNA BOOKSTORE##########" << endl;
     cout << "#########################################################" << endl;
 
     while(true) {
         menu();
-        cout << "Masukkan pilihan anda (1-3) : ";
+        cout << "Masukkan pilihan anda (1-4) : ";
         cin >> pilih;
 
         switch (pilih) {
